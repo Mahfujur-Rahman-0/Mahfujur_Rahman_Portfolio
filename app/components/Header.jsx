@@ -11,7 +11,7 @@ export default function Header() {
 		setIsChecked(!isChecked);
 	};
 	return (
-		<header className="relative">
+		<header className="relative z-[33333333333333]">
 			<nav className="max-w-[1280px] h-16 px-6 mx-auto flex  text-white">
 				<Link href={"/"}>
 					<div className="flex w-[260px] py-3 items-center h-full">
@@ -198,11 +198,11 @@ export default function Header() {
 						<div id="bar3" className="bars"></div>
 					</label>
 				</div>
-			</nav>{" "}
+			</nav>
 			<div
 				className={`${
 					!isChecked ? "right-full" : "right-0"
-				} absolute lg:hidden w-full px-6 transition-all duration-300 `}
+				} absolute lg:hidden w-full px-6 transition-all duration-300 bg-neutral-950 h-96`}
 			>
 				<ul
 					className={`lg:hidden block w-full text-decoration-none text-white font-medium text-sm`}

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function MainPage() {
 	const videoRef = useRef(null);
@@ -15,7 +16,7 @@ export default function MainPage() {
 			video.play().catch((err) => console.error("Autoplay error:", err));
 		}
 	}, []);
-
+	const pathname = usePathname();
 	const handleMouseMove = (event) => {
 		setMposition({
 			x: event.nativeEvent.offsetX,
@@ -30,31 +31,58 @@ export default function MainPage() {
 	useEffect(() => {
 		setCheckerPosition(Mposition);
 	}, [Mposition]);
+
 	const animateStart = () => {
 		let tempX = 0;
-		let tempY = 0;
+		let tempY = 30;
+		let checkY = false;
+		let checkX = false;
+
 		if (!intervalRef.current) {
 			intervalRef.current = setInterval(() => {
-				if (tempX <= 100) {
-					tempX++;
+				if (tempX <= 91 && checkX === false) {
+					if (tempX <= 50) {
+						tempX++;
+					} else if (tempY >= 0 && checkY === true) {
+						if (tempX === 91) {
+							checkX = true;
+						} else {
+							tempX++;
+						}
+					}
 				} else {
-					tempX = 0;
-				}
-				if (tempX >= 50) {
-					if (tempY <= 100) {
-						tempY--;
-					} else {
-						tempY = 0;
+					if (tempX <= 91) {
+						if (tempX <= 0 && checkX === true) {
+							checkX = false;
+						} else {
+							tempX--;
+						}
+					} else if (tempY >= 0 && checkY === true) {
+						tempX--;
 					}
 				}
 
-				setAni({ x: `${tempX}`, y: ` ${tempY}` });
+				if (tempX >= 50) {
+					if (tempY > 0 && checkY === false) {
+						tempY--;
+						if (tempY === 1) {
+							checkY = true;
+						}
+					} else if (tempY <= 100 && checkY === true) {
+						tempY++;
+						if (tempY === 100) {
+							checkY = false;
+						}
+					}
+				}
+
+				setAni({ x: `${tempX}`, y: `${tempY}` });
 				console.log(tempX);
 				console.log(tempY);
 			}, 100);
 		}
 	};
-	console.log(ani);
+
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			if (
@@ -65,7 +93,7 @@ export default function MainPage() {
 				animateStart();
 				console.log("Mouse position did not change within the time limit");
 			}
-		}, 6000);
+		}, 1000);
 		return () => {
 			clearTimeout(timeout);
 			if (intervalRef.current) {

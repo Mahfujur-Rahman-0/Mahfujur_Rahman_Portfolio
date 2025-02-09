@@ -104,9 +104,68 @@ export default function MainPage() {
 			}
 		};
 	}, [Mposition, Checkerposition]);
+
+	// bell animation start
+
+	const [rotationAngle, setRotationAngle] = useState(0);
+	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
+	const [bellSize, setBellSize] = useState(0);
+	const [TextSize, setTextSize] = useState(0);
+
+	const animationFrameRef = useRef(null);
+	const animationPendenRef = useRef(null);
+
+	const startTimeRef = useRef(null);
+	const startPendenTimeRef = useRef(null);
+
+	const isAnimating = useRef(false);
+
+	const TheBell = () => {
+		if (isAnimating.current) return;
+
+		isAnimating.current = true;
+
+		const animateRotation = (timestamp) => {
+			if (!startTimeRef.current) startTimeRef.current = timestamp;
+			const elapsedTime = timestamp - startTimeRef.current;
+			const angle = Math.sin((elapsedTime / 100) * Math.PI) * 18;
+			setRotationAngle(angle);
+			animationFrameRef.current = requestAnimationFrame(animateRotation);
+		};
+		const animatePendenRotation = (timestamp) => {
+			if (!startPendenTimeRef.current) startPendenTimeRef.current = timestamp;
+			const elapsedTime = timestamp - startPendenTimeRef.current;
+			const angle = Math.sin((elapsedTime / 60) * Math.PI) * 18;
+			setRotationAnglePendem(angle);
+			animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
+			setBellSize(1.1);
+			setTextSize("326.3177 190.8712");
+		};
+		// Start the animation
+		animationFrameRef.current = requestAnimationFrame(animateRotation);
+		animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
+
+		// Stop the animation after 500ms
+		setTimeout(() => {
+			isAnimating.current = false; // Mark the animation as stopped
+			cancelAnimationFrame(animationFrameRef.current); // Cancel the ongoing animation frame
+			setRotationAngle(0); // Reset the rotation angle to 0
+		}, 300); // 300ms stop time
+
+		setTimeout(() => {
+			isAnimating.current = false; // Mark the animation as stopped
+			cancelAnimationFrame(animationPendenRef.current); // Cancel the ongoing animation frame
+			setBellSize(0);
+			setTextSize(0);
+			setRotationAnglePendem(0); // Reset the rotation angle to 0
+		}, 450);
+	};
+
+	//bell animation end
+
 	return (
 		<>
-			<section className={`relative`}>
+			<section className={`relative bg-[#090B0D]`}>
 				<div
 					onMouseMove={handleMouseMove}
 					style={
@@ -125,7 +184,7 @@ export default function MainPage() {
 					}
 				>
 					<video
-						className="md:w-full w-[160%] md:ml-0 ml-[-21%] max-w-[160%] md:max-w-[auto]"
+						className="md:w-full w-[160%] ml-[-21%] max-w-[160%] md:max-w-[1900px] md:mx-auto"
 						ref={videoRef}
 						muted
 						playsInline
@@ -153,7 +212,7 @@ export default function MainPage() {
 			</section>
 
 			<div className="overflow-hidden bg-[#f6f6f6]">
-				<section className=" max-w-[1200px] mx-auto lg:pt-32 md:pt-24 pt-16">
+				<section className=" max-w-[1200px] lg:w-[80%] w-[90%] mx-auto lg:pt-32 md:pt-24 pt-16">
 					<div className="px-5 z-10">
 						<h2 className="text-4xl font-semibold leading-tight tracking-tighter text-black  md:text-6xl lg:text-7xl xl:text-8xl">
 							Unmatched productivity
@@ -164,7 +223,7 @@ export default function MainPage() {
 							platform that provides amazing collaboration opportunities for
 							developers and product teams alike.
 						</p>
-						<ul className="xl:mt-10 flex flex-wrap lg:gap-5 lg:mt-9 gap-4 md:mt-6 mt-5 sm:grid sm:grid-cols-3 xs:grid-cols-1">
+						<ul className="xl:mt-10 flex flex-wrap lg:gap-5 lg:mt-9 gap-4 md:mt-6 mt-5 sm:grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1">
 							<li className="relative xl:h-[420px] overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px] w-full  ">
 								<div className="absolute bottom-0 z-10 col-span-full flex w-full items-end px-6 pb-6 lg:px-5 lg:pb-5 md:px-4 md:pb-4  sm:px-5 sm:pb-5 md:after:absolute md:after:bottom-0 md:after:left-0 md:after:z-0 md:after:h-[180%] md:after:w-full md:after:bg-[linear-gradient(180deg,rgba(9,10,12,0)_0%,#090A0C_40.76%)] md:after:blur-md">
 									<p className="relative z-10 font-light leading-snug tracking-snugger text-white/65 md:leading-[1.2] sm:text-15">
@@ -174,6 +233,7 @@ export default function MainPage() {
 										Work efficiently with instant access to common actions.
 									</p>
 								</div>
+
 								<div className="relative col-span-full row-span-full">
 									<span
 										className="absolute left-1/2 top-0 -z-10 h-full w-px"
@@ -185,7 +245,7 @@ export default function MainPage() {
 									></div>
 								</div>
 							</li>
-							<li className="relative col-span-2 xl:h-[420px] overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px] w-full">
+							<li className="relative md:col-span-2 xl:h-[420px] overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px] w-full">
 								<div className="absolute bottom-0 z-10 col-span-full flex w-full items-end px-6 pb-6 lg:px-5 lg:pb-5 md:px-4 md:pb-4  sm:px-5 sm:pb-5 md:after:absolute md:after:bottom-0 md:after:left-0 md:after:z-0 md:after:h-[180%] md:after:w-full md:after:bg-[linear-gradient(180deg,rgba(9,10,12,0)_0%,#090A0C_40.76%)] md:after:blur-md">
 									<p className="relative z-10 font-light leading-snug tracking-snugger text-white/65 md:leading-[1.2] sm:text-15 max-w-[436px] md:max-w-[344px]">
 										<span className="font-medium text-white">
@@ -207,7 +267,7 @@ export default function MainPage() {
 								</div>
 							</li>
 
-							<li className="relative col-span-2 xl:h-[420px] overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px] w-full">
+							<li className="relative md:col-span-2 xl:h-[420px] overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px] w-full">
 								<div className="absolute bottom-0 z-10 col-span-full flex w-full items-end px-6 pb-6 lg:px-5 lg:pb-5 md:px-4 md:pb-4  sm:px-5 sm:pb-5 md:after:absolute md:after:bottom-0 md:after:left-0 md:after:z-0 md:after:h-[180%] md:after:w-full md:after:bg-[linear-gradient(180deg,rgba(9,10,12,0)_0%,#090A0C_40.76%)] md:after:blur-md">
 									<p className="relative z-10 font-light leading-snug tracking-snugger text-white/65 md:leading-[1.2] sm:text-15 max-w-[392px] lg:max-w-[348px]">
 										<span className="font-medium text-white">
@@ -229,7 +289,10 @@ export default function MainPage() {
 								</div>
 							</li>
 
-							<li className="relative grid xl:h-[420px] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px]  order-4 w-[428px] w-full">
+							<li
+								onMouseEnter={TheBell}
+								className="relative grid xl:h-[420px] bg-[#0C0C0C] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px]  order-4 w-full"
+							>
 								<div className="absolute bottom-0 z-10 col-span-full flex w-full items-end px-6 pb-6 lg:px-5 lg:pb-5 md:px-4 md:pb-4 sm:px-5 sm:pb-5">
 									<p className="relative z-10 font-light leading-snug tracking-snugger text-white/65 md:leading-[1.2] sm:text-15">
 										<span className="font-medium text-white">
@@ -271,78 +334,75 @@ export default function MainPage() {
 										aria-hidden="true"
 									>
 										<div className="h-full flex justify-center items-center w-full md:pointer-events-none [&_canvas]:!h-full [&_canvas]:!w-full">
-											<div className="w-[80px] h-[80px] xl:mt-[-12%] mt-[-13%]">
+											<div
+												className={`w-[20%] xl:mt-[-13.5%] sm:mt-[-14%] mt-[-13.4%] rounded-full border border-red-500 aspect-square`}
+											>
 												<svg
-													className="border border-red-600 rounded-full"
+													className="w-full h-full"
+													version="1.1"
+													id="Layer_1"
 													xmlns="http://www.w3.org/2000/svg"
-													viewBox="0 0 100 100"
-													preserveAspectRatio="xMidYMid meet"
-													style={{
-														transform: "translate3d(0px, 0px, 0px)",
-														contentVisibility: "visible",
-													}}
+													xmlnsXlink="http://www.w3.org/1999/xlink"
+													viewBox="-200 -50 848 612"
+													style={{ enableBackground: "new -200 -50 848 612" }}
+													xmlSpace="preserve"
 												>
-													<defs>
-														<clipPath id="__lottie_element_2">
-															<rect width="100" height="100" x="0" y="0" />
-														</clipPath>
-													</defs>
-													<g clipPath="url(#__lottie_element_2)">
+													<style>
+														{`
+          .st0 { fill: #DDDDDD; }
+          .st1 { fill: #fc7742; }
+          .st2 { font-family: 'arial'; }
+          .st3 { font-size: 96.9077px; }
+        `}
+													</style>
+													<g>
 														<g
-															transform="matrix(0.999,0.0445,-0.0445,0.999,1.1,-2.2)"
-															opacity="1"
-															style={{ display: "block" }}
+															transform={`rotate(${rotationAnglePendem} 224 90) scale(${
+																bellSize == 0 ? 1 : bellSize
+															})`}
 														>
-															<g
-																opacity="1"
-																transform="matrix(1,0,0,1,50,24.25)"
-															>
-																<path
-																	strokeLinecap="round"
-																	strokeLinejoin="round"
-																	stroke="#DDDDDD"
-																	fillOpacity="1"
-																	fill="#DDDDDD"
-																	strokeOpacity="1"
-																	strokeWidth="1"
-																	d="M3.5,1.75 C3.5,-0.183 1.93,-1.75 0,-1.75 C-1.93,-1.75 -3.5,-0.183 -3.5,1.75"
-																/>
-															</g>
-															<g opacity="1" transform="matrix(1,0,0,1,50,48)">
-																<path
-																	strokeLinecap="round"
-																	strokeLinejoin="round"
-																	fillOpacity="1"
-																	stroke="#000"
-																	fill="#DDDDDD"
-																	strokeOpacity="1"
-																	strokeWidth="1"
-																	d="M-21.51,14 C-21.51,14 -19.75,-4.08 -19.75,-4.08 C-18.76,-14.25 -10.21,-22 0,-22 C10.21,-22 18.76,-14.25 19.75,-4.08 C19.75,-4.08 21.51,14 21.51,14 C21.51,14 22,14 22,14 C24.21,14 26,15.79 26,18 C26,20.21 24.21,22 22,22 C22,22 -22,22 -22,22 C-24.21,22 -26,20.21 -26,18 C-26,15.79 -24.21,14 -22,14 C-22,14 -21.51,14 -21.51,14z"
-																/>
-															</g>
+															<path
+																className="st0"
+																d="M160,448c0,35.3,28.6,64,64,64s64-28.6,64-64H160z"
+															/>
 														</g>
 
 														<g
-															transform="matrix(0.998,0.0645,-0.0645,0.998,-2.74,-3.24)"
-															opacity="1"
-															style={{ display: "block" }}
+															transform={`rotate(${rotationAngle} 224 90) scale(${
+																bellSize == 0 ? 1 : bellSize
+															})`}
 														>
-															<g
-																opacity="1"
-																transform="matrix(1,0,0,1,50,73.75)"
-															>
-																<path
-																	strokeLinecap="round"
-																	strokeLinejoin="round"
-																	fillOpacity="1"
-																	stroke="#000"
-																	fill="#DDDDDD"
-																	strokeOpacity="1"
-																	strokeWidth="1"
-																	d="M7.5,-3.75 C7.5,0.393 4.14,3.75 0,3.75 C-4.14,3.75 -7.5,0.393 -7.5,-3.75"
-																/>
-															</g>
+															<path
+																className="st0"
+																d="M448,384.6c-0.1,3.3-1,14-9.2,22.2c-5.7,5.7-13.5,9.2-22.2,9.2H31.4c-8.7,0-16.5-3.5-22.2-9.2
+          C1,398.6,0.1,387.9,0,384.6c-0.1-3,0-12.6,11.9-28.9c11.4-15.5,20-18.6,28.1-27.2c16.4-17.3,16.1-41.4,16.8-57.2
+          c2-42-4.3-123.3,55.5-177c17.3-15.5,46.1-39.5,111.6-42.3c65.5,2.7,94.3,26.7,111.6,42.3c59.9,53.7,53.5,135,55.5,177
+          c0.8,15.7,0.4,39.9,16.8,57.2c8.1,8.6,16.8,11.7,28.1,27.2C448,372,448.1,381.6,448,384.6z"
+															/>
 														</g>
+														<path
+															transform={`rotate(${rotationAngle} 224 90) scale(${
+																bellSize == 0 ? 1 : bellSize
+															})`}
+															className="st0"
+															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
+														/>
+														<path
+															transform={`scale(${
+																bellSize == 0 ? 1.1 : bellSize + 0.1
+															})`}
+															className="st1"
+															d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
+          c35.5,0,64.4,28.8,64.4,64.4v0C411.8,168.9,383,197.7,347.4,197.7z"
+														/>
+														<text
+															transform={`matrix(1 0 0 1 ${
+																TextSize == 0 ? "295.3177 170.8712" : TextSize
+															})`}
+															className="st2 st3"
+														>
+															33
+														</text>
 													</g>
 												</svg>
 											</div>

@@ -1,15 +1,9 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Banner from "../banner";
 
 export default function MainPage() {
-	const videoRef = useRef(null);
-	const intervalRef = useRef(null);
 	const NotificationRef = useRef(null);
-	const [Mposition, setMposition] = useState({ x: 0, y: 0 });
-	const [Checkerposition, setCheckerPosition] = useState({ x: 0, y: 0 });
-	const [animate, setAnimation] = useState(false);
-	const [ani, setAni] = useState({ x: 0, y: 0 });
 
 	useEffect(() => {
 		const playVideo = (ref) => {
@@ -19,91 +13,8 @@ export default function MainPage() {
 			}
 		};
 
-		playVideo(videoRef);
 		playVideo(NotificationRef);
 	}, []);
-	const handleMouseMove = (event) => {
-		setMposition({
-			x: event.nativeEvent.offsetX,
-			y: event.nativeEvent.offsetY,
-		});
-		setAnimation(true);
-		if (intervalRef.current) {
-			clearInterval(intervalRef.current);
-			intervalRef.current = null;
-		}
-	};
-	useEffect(() => {
-		setCheckerPosition(Mposition);
-	}, [Mposition]);
-
-	const animateStart = () => {
-		let tempX = 0;
-		let tempY = 30;
-		let checkY = false;
-		let checkX = false;
-
-		if (!intervalRef.current) {
-			intervalRef.current = setInterval(() => {
-				if (tempX <= 91 && checkX === false) {
-					if (tempX <= 50) {
-						tempX++;
-					} else if (tempY >= 0 && checkY === true) {
-						if (tempX === 91) {
-							checkX = true;
-						} else {
-							tempX++;
-						}
-					}
-				} else {
-					if (tempX <= 91) {
-						if (tempX <= 0 && checkX === true) {
-							checkX = false;
-						} else {
-							tempX--;
-						}
-					} else if (tempY >= 0 && checkY === true) {
-						tempX--;
-					}
-				}
-
-				if (tempX >= 50) {
-					if (tempY > 0 && checkY === false) {
-						tempY--;
-						if (tempY === 1) {
-							checkY = true;
-						}
-					} else if (tempY <= 100 && checkY === true) {
-						tempY++;
-						if (tempY === 100) {
-							checkY = false;
-						}
-					}
-				}
-
-				setAni({ x: `${tempX}`, y: `${tempY}` });
-			}, 100);
-		}
-	};
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			if (
-				Mposition.x === Checkerposition.x &&
-				Mposition.y === Checkerposition.y
-			) {
-				setAnimation(null);
-				animateStart();
-			}
-		}, 1000);
-		return () => {
-			clearTimeout(timeout);
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current);
-				intervalRef.current = null;
-			}
-		};
-	}, [Mposition, Checkerposition]);
 
 	// bell animation start
 
@@ -112,104 +23,67 @@ export default function MainPage() {
 	const [bellSize, setBellSize] = useState(0);
 	const [TextSize, setTextSize] = useState(0);
 
-	const animationFrameRef = useRef(null);
-	const animationPendenRef = useRef(null);
-
-	const startTimeRef = useRef(null);
-	const startPendenTimeRef = useRef(null);
-
 	const isAnimating = useRef(false);
 
+	// const TheBell = () => {
+	// 	if (isAnimating.current) return;
+
+	// 	isAnimating.current = true;
+
+	// 	const animateRotation = (timestamp) => {
+	// 		if (!startTimeRef.current) startTimeRef.current = timestamp;
+	// 		const elapsedTime = timestamp - startTimeRef.current;
+	// 		const angle = Math.sin((elapsedTime / 150) * Math.PI) * 18;
+	// 		setRotationAngle(angle);
+	// 		animationFrameRef.current = requestAnimationFrame(animateRotation);
+	// 	};
+	// 	const animatePendenRotation = (timestamp) => {
+	// 		if (!startPendenTimeRef.current) startPendenTimeRef.current = timestamp;
+	// 		const elapsedTime = timestamp - startPendenTimeRef.current;
+	// 		const angle = Math.sin((elapsedTime / 60) * Math.PI) * 18;
+	// 		setRotationAnglePendem(angle);
+	// 		animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
+	// 		setBellSize(1.2);
+	// 		setTextSize("326.3177 190.8712");
+	// 	};
+	// 	// Start the animation
+	// 	animationFrameRef.current = requestAnimationFrame(animateRotation);
+	// 	animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
+
+	// 	// Stop the animation after 500ms
+	// 	setTimeout(() => {
+	// 		isAnimating.current = false; // Mark the animation as stopped
+	// 		cancelAnimationFrame(animationFrameRef.current); // Cancel the ongoing animation frame
+	// 		setRotationAngle(0); // Reset the rotation angle to 0
+	// 	}, 300); // 300ms stop time
+
+	// 	setTimeout(() => {
+	// 		isAnimating.current = false; // Mark the animation as stopped
+	// 		cancelAnimationFrame(animationPendenRef.current); // Cancel the ongoing animation frame
+	// 		setBellSize(0);
+	// 		setTextSize(0);
+	// 		setRotationAnglePendem(0); // Reset the rotation angle to 0
+	// 	}, 450);
+	// };
 	const TheBell = () => {
 		if (isAnimating.current) return;
-
+		console.log("enter");
 		isAnimating.current = true;
 
-		const animateRotation = (timestamp) => {
-			if (!startTimeRef.current) startTimeRef.current = timestamp;
-			const elapsedTime = timestamp - startTimeRef.current;
-			const angle = Math.sin((elapsedTime / 100) * Math.PI) * 18;
-			setRotationAngle(angle);
-			animationFrameRef.current = requestAnimationFrame(animateRotation);
-		};
-		const animatePendenRotation = (timestamp) => {
-			if (!startPendenTimeRef.current) startPendenTimeRef.current = timestamp;
-			const elapsedTime = timestamp - startPendenTimeRef.current;
-			const angle = Math.sin((elapsedTime / 60) * Math.PI) * 18;
-			setRotationAnglePendem(angle);
-			animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
-			setBellSize(1.1);
-			setTextSize("326.3177 190.8712");
-		};
-		// Start the animation
-		animationFrameRef.current = requestAnimationFrame(animateRotation);
-		animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
-
-		// Stop the animation after 500ms
 		setTimeout(() => {
-			isAnimating.current = false; // Mark the animation as stopped
-			cancelAnimationFrame(animationFrameRef.current); // Cancel the ongoing animation frame
-			setRotationAngle(0); // Reset the rotation angle to 0
-		}, 300); // 300ms stop time
-
-		setTimeout(() => {
-			isAnimating.current = false; // Mark the animation as stopped
-			cancelAnimationFrame(animationPendenRef.current); // Cancel the ongoing animation frame
-			setBellSize(0);
-			setTextSize(0);
-			setRotationAnglePendem(0); // Reset the rotation angle to 0
-		}, 450);
+			if (isAnimating.current == true) {
+				setInterval(() => {
+					setRotationAngle((prev) => prev + 1);
+				}, 60);
+			}
+			isAnimating.current = false;
+		}, 300);
 	};
-
 	//bell animation end
 
 	return (
 		<>
-			<section className={`relative bg-[#090B0D]`}>
-				<div
-					onMouseMove={handleMouseMove}
-					style={
-						animate !== null
-							? {
-									"--hero-mask-size": "200px",
-									"--hero-mask-x": `${Mposition.x}px`,
-									"--hero-mask-y": `${Mposition.y}px`,
-							  }
-							: {
-									"--hero-mask-size": "250px",
-									maskRepeat: "no-repeat",
-									"--hero-mask-x": `${ani.x}%`,
-									"--hero-mask-y": `${ani.y}%`,
-							  }
-					}
-				>
-					<video
-						className="md:w-full w-[160%] ml-[-21%] max-w-[160%] md:max-w-[1900px] md:mx-auto"
-						ref={videoRef}
-						muted
-						playsInline
-						loop
-						preload="auto"
-					>
-						<source src="/video/showreAnimation.mp4" type="video/mp4" />
-					</video>
-
-					<Image
-						src="/ImageOne.svg"
-						width={200}
-						height={100}
-						alt="Torchlight effect"
-						className="w-full sm:block hidden h-full transition-all absolute top-0 right-[-9%] object-cover mask-radial-spotlight"
-					/>
-					<Image
-						src="/ImgTwo.svg"
-						width={200}
-						height={100}
-						alt="Torchlight effect"
-						className="w-full h-full  sm:block hidden transition-all absolute top-0 right-[-9%] object-cover mask-radial-spotlight"
-					/>
-				</div>
-			</section>
+			<Banner />
 
 			<div className="overflow-hidden bg-[#f6f6f6]">
 				<section className=" max-w-[1200px] lg:w-[80%] w-[90%] mx-auto lg:pt-32 md:pt-24 pt-16">
@@ -335,7 +209,7 @@ export default function MainPage() {
 									>
 										<div className="h-full flex justify-center items-center w-full md:pointer-events-none [&_canvas]:!h-full [&_canvas]:!w-full">
 											<div
-												className={`w-[20%] xl:mt-[-13.5%] sm:mt-[-14%] mt-[-13.4%] rounded-full border border-red-500 aspect-square`}
+												className={`w-[20%] xl:mt-[-13.5%] sm:mt-[-14%] mt-[-13.4%] rounded-full aspect-square`}
 											>
 												<svg
 													className="w-full h-full"
@@ -350,12 +224,16 @@ export default function MainPage() {
 													<style>
 														{`
           .st0 { fill: #DDDDDD; }
-          .st1 { fill: #fc7742; }
+          .st1 { fill: #ff6d00; }
           .st2 { font-family: 'arial'; }
           .st3 { font-size: 96.9077px; }
         `}
 													</style>
-													<g>
+													<g
+														transform={`scale(.8) ${
+															bellSize != 0 ? "" : "translate(70 70)"
+														}`}
+													>
 														<g
 															transform={`rotate(${rotationAnglePendem} 224 90) scale(${
 																bellSize == 0 ? 1 : bellSize
@@ -381,21 +259,29 @@ export default function MainPage() {
 															/>
 														</g>
 														<path
-															transform={`rotate(${rotationAngle} 224 90) scale(${
-																bellSize == 0 ? 1 : bellSize
-															})`}
+															// transform={`rotate(${rotationAngle} 224 90) scale(${
+															// 	bellSize == 0 ? 1 : bellSize
+															// })`}
+															transform={`${
+																bellSize == 0 ? "" : "translate(30 0)"
+															}`}
 															className="st0"
 															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
 														/>
 														<path
 															transform={`scale(${
-																bellSize == 0 ? 1.1 : bellSize + 0.1
-															})`}
+																bellSize == 0 ? 1.2 : bellSize + 0.1
+															}) translate(-7 -26)`}
 															className="st1"
 															d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
           c35.5,0,64.4,28.8,64.4,64.4v0C411.8,168.9,383,197.7,347.4,197.7z"
 														/>
 														<text
+															style={{
+																isolation: "isolate",
+																fontSize: "139.57675170898438px",
+																fontFamily: "ArialMT, Arial",
+															}}
 															transform={`matrix(1 0 0 1 ${
 																TextSize == 0 ? "295.3177 170.8712" : TextSize
 															})`}
@@ -403,6 +289,34 @@ export default function MainPage() {
 														>
 															33
 														</text>
+													</g>
+													<g
+														className="w-full h-full"
+														transform=" translate(-225 -200)"
+													>
+														<image
+															width="874"
+															height="874"
+															transform="translate(25 24)"
+															xmlnsXlink="http://www.w3.org/1999/xlink"
+															xlinkHref="/Image/Two.png"
+														/>
+														<g style={{ opacity: 0.7 }}>
+															<image
+																width="923"
+																height="923"
+																xmlnsXlink="http://www.w3.org/1999/xlink"
+																xlinkHref="/Image/One.png"
+															/>
+														</g>
+														<image
+															width="867"
+															height="868"
+															transform="translate(28 27)"
+															xmlns="http://www.w3.org/2000/svg"
+															xmlnsXlink="http://www.w3.org/1999/xlink"
+															xlinkHref="/Image/Three.png"
+														/>
 													</g>
 												</svg>
 											</div>
@@ -413,7 +327,6 @@ export default function MainPage() {
 						</ul>
 					</div>
 				</section>
-
 				<section className=" max-w-[1200px] mx-auto lg:pt-32 md:pt-24 pt-16">
 					<div className="px-5">
 						<h2 className="relative xl:max-w-[550px] font-title mx-auto font-semibold leading-[0.9] tracking-tighter text-black xl:text-7xl md:max-w-[430px] md:text-6xl text-4xl max-w-[544px]">

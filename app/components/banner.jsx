@@ -5,16 +5,33 @@ import { useCallback, useEffect, useRef } from "react";
 export default function Banner() {
 	const videoRef = useRef(null);
 	const intervalRef = useRef(null);
+
 	useEffect(() => {
-		const playVideo = (ref) => {
-			const video = ref.current;
-			if (video) {
-				video.play().catch((err) => console.error("Autoplay error:", err));
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const video = entry.target;
+					if (entry.isIntersecting) {
+						video.play().catch((err) => console.error("Play error:", err));
+					} else {
+						video.pause();
+					}
+				});
+			},
+			{ threshold: 0.5 } // Trigger when at least 50% is visible
+		);
+
+		if (videoRef.current) {
+			observer.observe(videoRef.current);
+		}
+
+		return () => {
+			if (videoRef.current) {
+				observer.unobserve(videoRef.current);
 			}
 		};
-
-		playVideo(videoRef);
 	}, []);
+
 	const isMoving = useRef(null);
 	const containerRef = useRef(null);
 	const positionRef = useRef({ x: 0, y: 0 });
@@ -26,7 +43,7 @@ export default function Banner() {
 		const y = event.clientY - rect.top;
 
 		positionRef.current = { x, y };
-		containerRef.current.style.setProperty("--hero-mask-x", `${x}px`);
+		containerRef.current.style.setProperty("--hero-mask-x", `${x - 150}px`);
 		containerRef.current.style.setProperty("--hero-mask-y", `${y}px`);
 		if (!isMoving.current) {
 			isMoving.current = { x, y };
@@ -109,8 +126,6 @@ export default function Banner() {
 		animateStart();
 	}, []);
 
-
-	console.log(isMoving);
 	return (
 		<section className={`relative bg-[#090B0D]`}>
 			<div

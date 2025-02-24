@@ -6,79 +6,106 @@ export default function MainPage() {
 	const NotificationRef = useRef(null);
 
 	useEffect(() => {
-		const playVideo = (ref) => {
-			const video = ref.current;
-			if (video) {
-				video.play().catch((err) => console.error("Autoplay error:", err));
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const video = entry.target;
+					if (entry.isIntersecting) {
+						video.play().catch((err) => console.error("Play error:", err));
+					} else {
+						video.pause();
+					}
+				});
+			},
+			{ threshold: 0.5 } // Trigger when at least 50% is visible
+		);
+
+		if (NotificationRef.current) {
+			observer.observe(NotificationRef.current);
+		}
+
+		return () => {
+			if (NotificationRef.current) {
+				observer.unobserve(NotificationRef.current);
 			}
 		};
-
-		playVideo(NotificationRef);
 	}, []);
-
 	// bell animation start
 
-	const [rotationAngle, setRotationAngle] = useState(0);
-	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
 	const [bellSize, setBellSize] = useState(0);
 	const [TextSize, setTextSize] = useState(0);
 
+	const [rotationAngle, setRotationAngle] = useState(0);
+	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
+
 	const isAnimating = useRef(false);
 
-	// const TheBell = () => {
-	// 	if (isAnimating.current) return;
+	let FinulStopN = useRef(-1);
+	let FinulStopPendem = useRef(-1);
 
-	// 	isAnimating.current = true;
-
-	// 	const animateRotation = (timestamp) => {
-	// 		if (!startTimeRef.current) startTimeRef.current = timestamp;
-	// 		const elapsedTime = timestamp - startTimeRef.current;
-	// 		const angle = Math.sin((elapsedTime / 150) * Math.PI) * 18;
-	// 		setRotationAngle(angle);
-	// 		animationFrameRef.current = requestAnimationFrame(animateRotation);
-	// 	};
-	// 	const animatePendenRotation = (timestamp) => {
-	// 		if (!startPendenTimeRef.current) startPendenTimeRef.current = timestamp;
-	// 		const elapsedTime = timestamp - startPendenTimeRef.current;
-	// 		const angle = Math.sin((elapsedTime / 60) * Math.PI) * 18;
-	// 		setRotationAnglePendem(angle);
-	// 		animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
-	// 		setBellSize(1.2);
-	// 		setTextSize("326.3177 190.8712");
-	// 	};
-	// 	// Start the animation
-	// 	animationFrameRef.current = requestAnimationFrame(animateRotation);
-	// 	animationPendenRef.current = requestAnimationFrame(animatePendenRotation);
-
-	// 	// Stop the animation after 500ms
-	// 	setTimeout(() => {
-	// 		isAnimating.current = false; // Mark the animation as stopped
-	// 		cancelAnimationFrame(animationFrameRef.current); // Cancel the ongoing animation frame
-	// 		setRotationAngle(0); // Reset the rotation angle to 0
-	// 	}, 300); // 300ms stop time
-
-	// 	setTimeout(() => {
-	// 		isAnimating.current = false; // Mark the animation as stopped
-	// 		cancelAnimationFrame(animationPendenRef.current); // Cancel the ongoing animation frame
-	// 		setBellSize(0);
-	// 		setTextSize(0);
-	// 		setRotationAnglePendem(0); // Reset the rotation angle to 0
-	// 	}, 450);
-	// };
 	const TheBell = () => {
 		if (isAnimating.current) return;
-		console.log("enter");
 		isAnimating.current = true;
+		let NumChecker = true;
+		let PendemChecker = true;
+		const interval = setInterval(() => {
+			//Bell pendem Animation start
+			if (FinulStopPendem.current !== 6) {
+				setRotationAnglePendem((prev) => {
+					if (prev <= 18 && PendemChecker) {
+						if (prev === 18) PendemChecker = false;
+						return prev + 2;
+					} else if (prev <= 18 && !PendemChecker) {
+						if (prev === -18) PendemChecker = true;
+						return prev - 2;
+					}
+					return prev;
+				});
+			} else {
+				setRotationAnglePendem(0);
+			}
+			//Bell pendem Animation End
+			// Bell Body Animation start
+			if (FinulStopN.current !== 4) {
+				setRotationAngle((prev) => {
+					if (prev <= 18 && NumChecker) {
+						if (prev === 18) NumChecker = false;
+						return prev + 2;
+					} else if (prev <= 18 && !NumChecker) {
+						if (prev === -18) NumChecker = true;
+						return prev - 2;
+					}
+
+					return prev;
+				});
+			} else {
+				setRotationAngle(0);
+			}
+			// Bell Body Animation End
+		}, 7);
+		//Bell Size start
+		setBellSize(1);
+		//Bell Size end
 
 		setTimeout(() => {
-			if (isAnimating.current == true) {
-				setInterval(() => {
-					setRotationAngle((prev) => prev + 1);
-				}, 60);
-			}
+			clearInterval(interval);
 			isAnimating.current = false;
-		}, 300);
+			FinulStopN.current = 1;
+			FinulStopPendem.current = 1;
+			setBellSize(0);
+		}, 700);
 	};
+	useEffect(() => {
+		if (rotationAngle === 0) {
+			FinulStopN.current = FinulStopN.current + 1;
+		}
+	}, [rotationAngle]); // Runs only when rotationAngle changes
+	useEffect(() => {
+		if (rotationAnglePendem === 0) {
+			FinulStopPendem.current = FinulStopPendem.current + 1;
+		}
+	}, [rotationAnglePendem]); // Runs only when rotationAngle changes
+
 	//bell animation end
 
 	return (
@@ -229,15 +256,9 @@ export default function MainPage() {
           .st3 { font-size: 96.9077px; }
         `}
 													</style>
-													<g
-														transform={`scale(.8) ${
-															bellSize != 0 ? "" : "translate(70 70)"
-														}`}
-													>
+													<g transform={`scale(0.8) translate(70 70)`}>
 														<g
-															transform={`rotate(${rotationAnglePendem} 224 90) scale(${
-																bellSize == 0 ? 1 : bellSize
-															})`}
+															transform={`rotate(${rotationAnglePendem} 224 90)`}
 														>
 															<path
 																className="st0"
@@ -245,11 +266,7 @@ export default function MainPage() {
 															/>
 														</g>
 
-														<g
-															transform={`rotate(${rotationAngle} 224 90) scale(${
-																bellSize == 0 ? 1 : bellSize
-															})`}
-														>
+														<g transform={`rotate(${rotationAngle} 224 90)`}>
 															<path
 																className="st0"
 																d="M448,384.6c-0.1,3.3-1,14-9.2,22.2c-5.7,5.7-13.5,9.2-22.2,9.2H31.4c-8.7,0-16.5-3.5-22.2-9.2
@@ -259,19 +276,14 @@ export default function MainPage() {
 															/>
 														</g>
 														<path
-															// transform={`rotate(${rotationAngle} 224 90) scale(${
-															// 	bellSize == 0 ? 1 : bellSize
-															// })`}
-															transform={`${
-																bellSize == 0 ? "" : "translate(30 0)"
-															}`}
+															// transform={`${
+															// 	bellSize == 0 ? "" : "translate(30 0)"
+															// }`}
 															className="st0"
 															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
 														/>
 														<path
-															transform={`scale(${
-																bellSize == 0 ? 1.2 : bellSize + 0.1
-															}) translate(-7 -26)`}
+															transform={`scale(1.2) translate(-7 -26)`}
 															className="st1"
 															d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
           c35.5,0,64.4,28.8,64.4,64.4v0C411.8,168.9,383,197.7,347.4,197.7z"

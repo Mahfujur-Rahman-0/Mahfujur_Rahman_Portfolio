@@ -32,39 +32,64 @@ export default function MainPage() {
 	}, []);
 	// bell animation start
 
-	const [bellSize, setBellSize] = useState(0);
 	const [TextSize, setTextSize] = useState(0);
 
 	const [rotationAngle, setRotationAngle] = useState(0);
 	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
+	const [bellSize, setBellSize] = useState(0);
+	const [BellPosition, setBellPosition] = useState(0);
 
 	const isAnimating = useRef(false);
 
 	let FinulStopN = useRef(-1);
-	let FinulStopPendem = useRef(-1);
+	let FinulStopPendem = useRef(1);
+	let BellSize = useRef(-1);
+	// Use ref instead of local variable
+	let BellPositionCounter = useRef(-1);
+	const pendemChecker = useRef(true);
 
 	const TheBell = () => {
 		if (isAnimating.current) return;
 		isAnimating.current = true;
 		let NumChecker = true;
-		let PendemChecker = true;
+
+		let BellSizeChecker = true;
+		let BellPositionChecker = true;
 		const interval = setInterval(() => {
-			//Bell pendem Animation start
-			if (FinulStopPendem.current !== 6) {
+			// //Bell pendem Animation start
+			// if (FinulStopPendem.current <= 6) {
+			// 	setRotationAnglePendem((prev) => {
+			// 		if (prev < 18 && pendemChecker.current) {
+			// 			if (prev + 2 >= 18) pendemChecker.current = false;
+			// 			return prev + 2;
+			// 		} else if (prev > -18 && !pendemChecker.current) {
+			// 			if (prev - 2 <= -18) pendemChecker.current = true;
+			// 			return prev - 2;
+			// 		}
+			// 		return prev; // Ensure a valid return value
+			// 	});
+			// } else {
+			// 	setRotationAnglePendem(0);
+			// }
+			if (FinulStopPendem.current <= 6) {
 				setRotationAnglePendem((prev) => {
-					if (prev <= 18 && PendemChecker) {
-						if (prev === 18) PendemChecker = false;
+					if (prev <= 18 && pendemChecker.current) {
+						if (prev === 18) pendemChecker.current = false;
+						//console.log("if is running...");
 						return prev + 2;
-					} else if (prev <= 18 && !PendemChecker) {
-						if (prev === -18) PendemChecker = true;
+					} else if (prev <= 18 && !pendemChecker.current) {
+						if (prev === -18) pendemChecker.current = true;
+						//console.log("else is running...");
 						return prev - 2;
 					}
-					return prev;
+					return 0;
 				});
+				//console.log("if is running...");
 			} else {
+				// console.log("else is running...");
 				setRotationAnglePendem(0);
 			}
-			//Bell pendem Animation End
+			// Bell pendem Animation End
 			// Bell Body Animation start
 			if (FinulStopN.current !== 4) {
 				setRotationAngle((prev) => {
@@ -75,37 +100,98 @@ export default function MainPage() {
 						if (prev === -18) NumChecker = true;
 						return prev - 2;
 					}
-
 					return prev;
 				});
 			} else {
 				setRotationAngle(0);
 			}
+			// if (FinulStopN.current !== 4) {
+			// 	setRotationAngle((prev) => {
+			// 		if (prev <= 18 && NumChecker) {
+			// 			if (prev === 18) NumChecker = false;
+			// 			return prev + 2;
+			// 		} else if (prev <= 18 && !NumChecker) {
+			// 			if (prev === -18) NumChecker = true;
+			// 			return prev - 2;
+			// 		}
+			// 		return 0;
+			// 	});
+			// } else {
+			// 	setRotationAngle(0);
+			// }
 			// Bell Body Animation End
 		}, 7);
 		//Bell Size start
-		setBellSize(1);
+		const Scalling = setInterval(() => {
+			if (BellSize.current !== 2) {
+				setBellSize((prev) => {
+					if (prev <= 20 && BellSizeChecker) {
+						if (prev === 20) BellSizeChecker = false;
+						return prev + 4;
+					} else if (prev <= 20 && !BellSizeChecker) {
+						if (prev === 0) BellSizeChecker = true;
+						return prev - 4;
+					}
+					return prev;
+				});
+			} else {
+				setBellSize(0);
+			}
+		}, 40);
 		//Bell Size end
+		//Bell Position Start
+
+		//not updated yet
+		const BellPositon = setInterval(() => {
+			if (BellPositionCounter.current !== 1) {
+				setBellPosition((prev) => {
+					if (prev <= 0 && BellPositionChecker) {
+						if (prev === -50) BellPositionChecker = false;
+						return prev - 1;
+					} else if (prev <= 0 && !BellPositionChecker) {
+						if (prev === 0) BellPositionChecker = true;
+						return prev + 1;
+					}
+					return prev;
+				});
+			} else {
+				setBellPosition(0);
+			}
+		}, 5);
+		//Bell Position End
 
 		setTimeout(() => {
 			clearInterval(interval);
+			clearInterval(BellPositon);
+			clearInterval(Scalling);
 			isAnimating.current = false;
 			FinulStopN.current = 1;
 			FinulStopPendem.current = 1;
-			setBellSize(0);
+			BellSize.current = 1;
+			BellPositionCounter.current = 0;
 		}, 700);
 	};
+	// Runs only when State changes
 	useEffect(() => {
 		if (rotationAngle === 0) {
 			FinulStopN.current = FinulStopN.current + 1;
 		}
-	}, [rotationAngle]); // Runs only when rotationAngle changes
+	}, [rotationAngle]);
 	useEffect(() => {
 		if (rotationAnglePendem === 0) {
 			FinulStopPendem.current = FinulStopPendem.current + 1;
 		}
-	}, [rotationAnglePendem]); // Runs only when rotationAngle changes
-
+	}, [rotationAnglePendem]);
+	useEffect(() => {
+		if (bellSize === 0) {
+			BellSize.current = BellSize.current + 1;
+		}
+	}, [bellSize]);
+	useEffect(() => {
+		if (BellPosition === 0) {
+			BellPositionCounter.current = BellPositionCounter.current + 1;
+		}
+	}, [BellPosition]);
 	//bell animation end
 
 	return (
@@ -256,9 +342,22 @@ export default function MainPage() {
           .st3 { font-size: 96.9077px; }
         `}
 													</style>
-													<g transform={`scale(0.8) translate(70 70)`}>
+													{/* transform={`BellPosition != 0
+																? `translate(${BellPosition} ${BellPosition})`
+																: translate(70 70)` */}
+													<g
+														transform={`scale(0.8) ${
+															BellPosition != 0
+																? `translate(${BellPosition + 70} ${
+																		BellPosition + 70
+																  }) `
+																: "translate(70 70)"
+														}`}
+													>
 														<g
-															transform={`rotate(${rotationAnglePendem} 224 90)`}
+															transform={`scale(${
+																bellSize != 0 ? bellSize / 100 + 1 : 1
+															}) rotate(${rotationAnglePendem} 224 90)`}
 														>
 															<path
 																className="st0"
@@ -266,7 +365,11 @@ export default function MainPage() {
 															/>
 														</g>
 
-														<g transform={`rotate(${rotationAngle} 224 90)`}>
+														<g
+															transform={`scale(${
+																bellSize != 0 ? bellSize / 100 + 1 : 1
+															}) rotate(${rotationAngle} 224 90)`}
+														>
 															<path
 																className="st0"
 																d="M448,384.6c-0.1,3.3-1,14-9.2,22.2c-5.7,5.7-13.5,9.2-22.2,9.2H31.4c-8.7,0-16.5-3.5-22.2-9.2
@@ -275,14 +378,15 @@ export default function MainPage() {
           c0.8,15.7,0.4,39.9,16.8,57.2c8.1,8.6,16.8,11.7,28.1,27.2C448,372,448.1,381.6,448,384.6z"
 															/>
 														</g>
+
 														<path
-															// transform={`${
-															// 	bellSize == 0 ? "" : "translate(30 0)"
-															// }`}
+															transform={`rotate(${rotationAngle} 224 90) ${
+																bellSize == 0 ? "" : "translate(0 0)"
+															}`}
 															className="st0"
 															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
 														/>
-														<path
+														{/* <path
 															transform={`scale(1.2) translate(-7 -26)`}
 															className="st1"
 															d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
@@ -300,7 +404,7 @@ export default function MainPage() {
 															className="st2 st3"
 														>
 															33
-														</text>
+														</text> */}
 													</g>
 													<g
 														className="w-full h-full"

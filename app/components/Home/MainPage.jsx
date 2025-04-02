@@ -308,8 +308,7 @@ export default function MainPage() {
 
 													<g
 														id={`${trry ? "Rotater_Circle" : ""}`}
-														className="w-full h-full"
-														transform=" translate(-225 -200)"
+														className="w-full h-full Custom-translate"
 													>
 														<image
 															width="874"

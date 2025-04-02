@@ -4,7 +4,6 @@ import Banner from "../banner";
 
 export default function MainPage() {
 	const NotificationRef = useRef(null);
-
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -36,23 +35,34 @@ export default function MainPage() {
 
 	const [rotationAngle, setRotationAngle] = useState(0);
 	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
-	const [bellSize, setBellSize] = useState(0);
-	const [BellPosition, setBellPosition] = useState(0);
+
 	const isAnimating = useRef(false);
 	const FinulStopN = useRef(-1);
 	const FinulStopPendem = useRef(-1);
-	const BellSize = useRef(-1);
-	const BellPositionCounter = useRef(-1);
+
 	const pendemChecker = useRef(true);
 	const NumChecker = useRef(true);
-	const BellSizeChecker = useRef(true);
-	const BellPositionChecker = useRef(true);
+
+	// Runs only when State changes
+	useEffect(() => {
+		if (rotationAngle === 0) {
+			FinulStopN.current = FinulStopN.current + 1;
+		}
+	}, [rotationAngle]);
+	useEffect(() => {
+		if (rotationAnglePendem === 0) {
+			FinulStopPendem.current = FinulStopPendem.current + 1;
+		}
+	}, [rotationAnglePendem]);
+	const [trry, setTry] = useState(false);
+	//bell animation end
 	const TheBell = () => {
 		if (isAnimating.current) return;
 		isAnimating.current = true;
+		setTry(true);
 		const interval = setInterval(() => {
 			// Bell Body Animation start
-			if (FinulStopN.current !== 5) {
+			if (FinulStopN.current !== 3) {
 				setRotationAngle((prev) => {
 					if (prev <= 19 && NumChecker.current) {
 						if (prev === 18) NumChecker.current = false;
@@ -66,97 +76,33 @@ export default function MainPage() {
 			} else {
 				setRotationAngle(0);
 			}
-			// Bell Body Animation End
 			// Bell pendem Animation Start
-			if (FinulStopPendem.current <= 8) {
+
+			if (FinulStopPendem.current <= 6) {
 				setRotationAnglePendem((prev) => {
-					if (prev <= 19 && pendemChecker.current) {
+					if (prev <= 18 && pendemChecker.current) {
 						if (prev === 18) pendemChecker.current = false;
 						return prev + 2;
 					} else if (prev >= -18 && !pendemChecker.current) {
 						if (prev === -18) pendemChecker.current = true;
 						return prev - 2;
 					}
-					return prev;
 				});
 			} else {
 				setRotationAnglePendem(0);
 			}
 
 			// Bell pendem Animation End
-		}, 6);
-		//Bell Size start
-		const Scalling = setInterval(() => {
-			if (BellSize.current !== 2) {
-				setBellSize((prev) => {
-					if (prev <= 20 && BellSizeChecker.current) {
-						if (prev === 20) BellSizeChecker.current = false;
-						return prev + 4;
-					} else if (prev <= 20 && !BellSizeChecker.current) {
-						if (prev === 0) BellSizeChecker.current = true;
-						return prev - 4;
-					}
-					return prev;
-				});
-			} else {
-				setBellSize(0);
-			}
-		}, 70);
-		//Bell Size end
-		//Bell Position Start
-		const BellPositon = setInterval(() => {
-			if (BellPositionCounter.current !== 1) {
-				setBellPosition((prev) => {
-					if (prev <= 0 && BellPositionChecker.current) {
-						if (prev === -50) BellPositionChecker.current = false;
-						return prev - 2;
-					} else if (prev <= 0 && !BellPositionChecker.current) {
-						if (prev === 0) BellPositionChecker.current = true;
-						return prev + 2;
-					}
-					return prev;
-				});
-			} else {
-				setBellPosition(0);
-			}
-		}, 5);
-		//Bell Position End
+		}, 7);
+
 		setTimeout(() => {
 			clearInterval(interval);
-			clearInterval(BellPositon);
-			clearInterval(Scalling);
-			setRotationAngle(0);
-			setBellPosition(0);
-			setRotationAnglePendem(0);
 			isAnimating.current = false;
 			FinulStopN.current = -1;
 			FinulStopPendem.current = -1;
-			BellSize.current = 1;
-			BellPositionCounter.current = 0;
+			setTry(false);
 		}, 1500);
 	};
-	// Runs only when State changes
-	useEffect(() => {
-		if (rotationAngle === 0) {
-			FinulStopN.current = FinulStopN.current + 1;
-		}
-	}, [rotationAngle]);
-	useEffect(() => {
-		if (rotationAnglePendem === 0) {
-			FinulStopPendem.current = FinulStopPendem.current + 1;
-		}
-	}, [rotationAnglePendem]);
-	useEffect(() => {
-		if (bellSize === 0) {
-			BellSize.current = BellSize.current + 1;
-		}
-	}, [bellSize]);
-	useEffect(() => {
-		if (BellPosition === 0) {
-			BellPositionCounter.current = BellPositionCounter.current + 1;
-		}
-	}, [BellPosition]);
-	//bell animation end
 
 	return (
 		<>
@@ -289,7 +235,7 @@ export default function MainPage() {
 												className={`w-[20%] xl:mt-[-13.5%] sm:mt-[-14%] mt-[-13.4%] rounded-full aspect-square`}
 											>
 												<svg
-													className="w-full h-full"
+													className={`w-full h-full overflow-visible`}
 													version="1.1"
 													id="Layer_1"
 													xmlns="http://www.w3.org/2000/svg"
@@ -308,18 +254,13 @@ export default function MainPage() {
 													</style>
 
 													<g
-														transform={`scale(0.8) ${
-															BellPosition !== 0
-																? `translate(${BellPosition + 70}, ${
-																		BellPosition + 70
-																  }) `
-																: "translate(70 70)"
-														}  `}
+														className={`${
+															trry ? "try" : ""
+														} transform translate-x-[19px] translate-y-[50px] scale-y-[0.8]`}
+														transform={`scale(0.8)`}
 													>
 														<g
-															transform={`scale(${
-																bellSize !== 0 ? bellSize / 100 + 1 : 1
-															}) rotate(${rotationAnglePendem} 224 90)`}
+															transform={`scale(1) rotate(${rotationAnglePendem} 224 90)`}
 														>
 															<path
 																className="st0"
@@ -328,9 +269,7 @@ export default function MainPage() {
 														</g>
 
 														<g
-															transform={`scale(${
-																bellSize != 0 ? bellSize / 100 + 1 : 1
-															}) rotate(${rotationAngle} 224 90)`}
+															transform={`scale(1) rotate(${rotationAngle} 224 90)`}
 														>
 															<path
 																className="st0"
@@ -342,9 +281,7 @@ export default function MainPage() {
 														</g>
 
 														<path
-															transform={`rotate(${rotationAngle} 224 90) ${
-																bellSize == 0 ? "" : "translate(0 0)"
-															}`}
+															transform={`rotate(${rotationAngle} 224 90) ${"translate(0 0)"}`}
 															className="st0"
 															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
 														/>
@@ -368,8 +305,9 @@ export default function MainPage() {
 															33
 														</text> */}
 													</g>
+
 													<g
-														id="Rotater_Circle"
+														id={`${trry ? "Rotater_Circle" : ""}`}
 														className="w-full h-full"
 														transform=" translate(-225 -200)"
 													>

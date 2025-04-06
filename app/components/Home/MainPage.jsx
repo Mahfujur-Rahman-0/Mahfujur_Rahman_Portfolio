@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Banner from "../banner";
 
 export default function MainPage() {
+	const [MouseCounter, setMouseCounter] = useState(33);
 	const NotificationRef = useRef(null);
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -30,9 +31,6 @@ export default function MainPage() {
 		};
 	}, []);
 	// bell animation start
-
-	const [TextSize, setTextSize] = useState(0);
-
 	const [rotationAngle, setRotationAngle] = useState(0);
 	const [rotationAnglePendem, setRotationAnglePendem] = useState(0);
 
@@ -59,6 +57,14 @@ export default function MainPage() {
 	const TheBell = () => {
 		if (isAnimating.current) return;
 		isAnimating.current = true;
+		setMouseCounter((prev) => {
+			if (prev <= 41) {
+				return prev + 1;
+			} else {
+				return 33;
+			}
+		});
+
 		setTry(true);
 		const interval = setInterval(() => {
 			// Bell Body Animation start
@@ -285,25 +291,48 @@ export default function MainPage() {
 															className="st0"
 															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
 														/>
-														{/* <path
-															transform={`scale(1.2) translate(-7 -26)`}
-															className="st1"
-															d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
-          c35.5,0,64.4,28.8,64.4,64.4v0C411.8,168.9,383,197.7,347.4,197.7z"
-														/>
-														<text
-															style={{
-																isolation: "isolate",
-																fontSize: "139.57675170898438px",
-																fontFamily: "ArialMT, Arial",
-															}}
-															transform={`matrix(1 0 0 1 ${
-																TextSize == 0 ? "295.3177 170.8712" : TextSize
-															})`}
-															className="st2 st3"
+														<g
+															className={`${
+																trry ? "Text_sizing" : ""
+															} C-text-style`}
 														>
-															33
-														</text> */}
+															<path
+																transform={`scale(1.2) translate(-7 -26)`}
+																className="st1"
+																d="M347.4,197.7h-66.8c-35.5,0-64.4-28.8-64.4-64.4v0c0-35.5,28.8-64.4,64.4-64.4h66.8
+          c35.5,0,64.4,28.8,64.4,64.4v0C411.8,168.9,383,197.7,347.4,197.7z"
+															/>
+															<text
+																style={{
+																	isolation: "isolate",
+																	fontSize: "139.57675170898438px",
+																	fontFamily: "ArialMT, Arial",
+																}}
+																transform={`matrix(1 0 0 1 295.3177 170.8712 )`}
+																className="st2 st3"
+															>
+																{MouseCounter}
+															</text>
+														</g>
+														<g
+															transform={`scale(1) rotate(${rotationAngle} 224 90)`}
+														>
+															<path
+																className={`st0 ${
+																	trry ? "Cus_stt" : ""
+																} opacity-0`}
+																d="M448,384.6c-0.1,3.3-1,14-9.2,22.2c-5.7,5.7-13.5,9.2-22.2,9.2H31.4c-8.7,0-16.5-3.5-22.2-9.2
+          C1,398.6,0.1,387.9,0,384.6c-0.1-3,0-12.6,11.9-28.9c11.4-15.5,20-18.6,28.1-27.2c16.4-17.3,16.1-41.4,16.8-57.2
+          c2-42-4.3-123.3,55.5-177c17.3-15.5,46.1-39.5,111.6-42.3c65.5,2.7,94.3,26.7,111.6,42.3c59.9,53.7,53.5,135,55.5,177
+          c0.8,15.7,0.4,39.9,16.8,57.2c8.1,8.6,16.8,11.7,28.1,27.2C448,372,448.1,381.6,448,384.6z"
+															/>
+														</g>
+
+														<path
+															transform={`rotate(${rotationAngle} 224 90) ${"translate(0 0)"}`}
+															className="st0"
+															d="M256,60.7l-15.9,0L208,60.8l-16,0l0-27.9h0v-0.3C192,14.6,206.3,0,224,0c17.7,0,32,14.6,32,32.6v0.2L256,60.7z"
+														/>
 													</g>
 
 													<g

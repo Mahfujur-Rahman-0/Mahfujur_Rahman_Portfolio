@@ -142,7 +142,7 @@ export default function Banner() {
 					width={2048}
 					height={1138}
 					className="w-[53vw] absolute bottom-[2%] max-w-[983px] 3xl:left-[clamp(45%,calc(45%+(1.5%*(100vw-1800px)/918)),46.5%)%] left-[45%] translate-x-[-50%]"
-					src="/image/topBanner.png"
+					src="/Image/topBanner.png"
 					alt="topBanner"
 				/>
 				<video

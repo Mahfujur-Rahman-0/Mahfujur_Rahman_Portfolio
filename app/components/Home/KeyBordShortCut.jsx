@@ -269,7 +269,7 @@ export default function KeyBordShortCut() {
 						<path
 							shapeRendering="crispEdges"
 							style={{
-								opacity: 0.93,
+								opacity: 0.86,
 								clipPath:
 									"url(#SVGID_00000110451975417466184880000015279158907959661211_)",
 							}}

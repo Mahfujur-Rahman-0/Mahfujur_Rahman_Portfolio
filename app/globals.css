@@ -236,16 +236,16 @@ html {
 }
 
 .FlareOne {
-	animation: FlareTransparent 8s linear 0s infinite alternate-reverse;
-	-webkit-animation: FlareTransparent 8s linear 0s infinite alternate-reverse;
+	animation: FlareTransparent 7s linear 0s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 7s linear 0s infinite alternate-reverse;
 }
 .FlareTwo {
-	animation: FlareTransparent 6s linear 1.2s infinite alternate-reverse;
-	-webkit-animation: FlareTransparent 6s linear 1.2s infinite alternate-reverse;
+	animation: FlareTransparent 7s linear 2.4s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 7s linear 2.4s infinite alternate-reverse;
 }
 .FlareThree {
-	animation: FlareTransparent 6s linear 2.4s infinite alternate-reverse;
-	-webkit-animation: FlareTransparent 6s linear 2.4s infinite alternate-reverse;
+	animation: FlareTransparent 7s linear 1.2s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 7s linear 1.2s infinite alternate-reverse;
 }
 
 @keyframes FlareTransparent {

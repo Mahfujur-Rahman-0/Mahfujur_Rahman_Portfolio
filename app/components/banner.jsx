@@ -138,6 +138,13 @@ export default function Banner() {
 					maskRepeat: "no-repeat",
 				}}
 			>
+				<Image
+					width={2048}
+					height={1138}
+					className="w-[53vw] absolute bottom-[2%] max-w-[983px] 3xl:left-[clamp(45%,calc(45%+(1.5%*(100vw-1800px)/918)),46.5%)%] left-[45%] translate-x-[-50%]"
+					src="/image/topBanner.png"
+					alt="topBanner"
+				/>
 				<video
 					className="md:w-full w-[160%] ml-[-21%] max-w-[160%] md:max-w-[1900px] md:mx-auto"
 					ref={videoRef}

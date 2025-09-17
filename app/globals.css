@@ -234,3 +234,37 @@ html {
 		opacity: 0;
 	}
 }
+
+.FlareOne {
+	animation: FlareTransparent 8s linear 0s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 8s linear 0s infinite alternate-reverse;
+}
+.FlareTwo {
+	animation: FlareTransparent 6s linear 1.2s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 6s linear 1.2s infinite alternate-reverse;
+}
+.FlareThree {
+	animation: FlareTransparent 6s linear 2.4s infinite alternate-reverse;
+	-webkit-animation: FlareTransparent 6s linear 2.4s infinite alternate-reverse;
+}
+
+@keyframes FlareTransparent {
+	0% {
+		opacity: 0.4;
+	}
+	20% {
+		opacity: 0.8;
+	}
+	40% {
+		opacity: 0.4;
+	}
+	60% {
+		opacity: 1;
+	}
+	80% {
+		opacity: 0.4;
+	}
+	100% {
+		opacity: 0.9;
+	}
+}

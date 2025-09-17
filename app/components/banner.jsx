@@ -138,13 +138,15 @@ export default function Banner() {
 					maskRepeat: "no-repeat",
 				}}
 			>
-				<Image
-					width={2048}
-					height={1138}
-					className="md:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic md:left-[45%] left-[50%] translate-x-[-50%]"
-					src="/Image/topBanner.png"
-					alt="topBanner"
-				/>
+				<div className="BannerCover overflow-hidden md:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic md:left-[45%] left-[50%] translate-x-[-50%]">
+					<Image
+						width={2048}
+						height={1138}
+						className="w-[99%] mx-auto h-full"
+						src="/Image/topBanner.png"
+						alt="topBanner"
+					/>
+				</div>
 				<video
 					className="md:w-full w-[160%] ml-[-21%] max-w-[160%] md:max-w-[1900px] md:mx-auto"
 					ref={videoRef}

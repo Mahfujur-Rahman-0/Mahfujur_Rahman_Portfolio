@@ -268,3 +268,9 @@ html {
 		opacity: 0.9;
 	}
 }
+
+@media (min-width: 1931px) and (max-width: 2718px) {
+	.left-dynamic {
+		left: 46% !important;
+	}
+}

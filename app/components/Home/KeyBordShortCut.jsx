@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useState } from "react";
 
 export default function KeyBordShortCut() {
@@ -156,13 +157,14 @@ export default function KeyBordShortCut() {
 
 						<g
 							style={{
+								transform: "translateX(-47px)",
 								clipPath:
 									"url(#SVGID_00000110451975417466184880000015279158907959661211_)",
 							}}
 						>
 							<image
 								style={{ overflow: "visible" }}
-								width="550"
+								width="650"
 								height="184"
 								id="Keyboard_00000028295887950034683270000007874143103595647662_"
 								xlinkHref="/Image/KeyBoardSupportImg/KeyBoardEight.png"

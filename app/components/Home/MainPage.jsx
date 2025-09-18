@@ -7,6 +7,7 @@ import Image from "next/image";
 export default function MainPage() {
 	const [MouseCounter, setMouseCounter] = useState(33);
 	const NotificationRef = useRef(null);
+
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -102,7 +103,7 @@ export default function MainPage() {
 
 			// Bell pendem Animation End
 		}, 7);
-
+		console.log("Testtt");
 		setTimeout(() => {
 			clearInterval(interval);
 			isAnimating.current = false;

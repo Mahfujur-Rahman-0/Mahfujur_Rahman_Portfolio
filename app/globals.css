@@ -281,7 +281,7 @@ html {
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
 }
-
+ 
 .BannerCover::before {
 	content: "";
 	width: 100%;

@@ -129,13 +129,18 @@ export default function Banner() {
 
 	return (
 		<section ref={Testtt} className={`relative bg-[#090B0D]`}>
-			<h1 className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[10%] absolute font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
-				Everything App for&nbsp;your teams
-			</h1>
-			<p className="absolute mt-5 max-w-md text-18 leading-snug tracking-tight text-grey-90 lg:mt-4 md:mt-3.5 md:text-16 sm:mt-3 sm:max-w-[248px] sm:text-15">
-				Huly, an open-source platform, serves as an all-in-one replacement of
-				Linear, Jira, Slack, and Notion.
-			</p>
+			<div className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[1%] xsm:top-[6%] absolute ">
+				<h1 className="font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
+					Modern Web Experiences
+				</h1>
+				<p className="lg:mt-5 sm:max-w-md text-white md:mt-4 sm:mt-3.5 sm:text-[18px] mt-3 max-w-[248px] text-[16px] md:text-[22px]">
+					From design to backend,
+					<br className="sm:hidden" /> I craft scalable web apps.
+					<span className="sm:inline hidden">
+						&nbsp;Clean, maintainable code for modern websites
+					</span>
+				</p>
+			</div>
 			<div className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]">
 				<Image
 					width={2048}
@@ -160,6 +165,7 @@ export default function Banner() {
 				onMouseMove={handleMouseMove}
 				ref={containerRef}
 				style={{
+					opacity: "0.3",
 					"--hero-mask-size": "200px",
 					"--hero-mask-x": "0",
 					"--hero-mask-y": "0",
@@ -178,7 +184,7 @@ export default function Banner() {
 					width={200}
 					height={100}
 					alt="Torchlight effect"
-					className="w-full h-full  sm:block hidden transition-all absolute top-0 right-[-9%] object-cover mask-radial-spotlight"
+					className="w-full h-full sm:block hidden transition-all absolute top-0 right-[-9%] object-cover mask-radial-spotlight"
 				/>
 			</div>
 		</section>

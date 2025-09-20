@@ -15,9 +15,7 @@ module.exports = {
 				"radial-spotlight":
 					"radial-gradient(var(--hero-mask-size) at var(--hero-mask-x) var(--hero-mask-y), black 20%, transparent)",
 			},
-			screens: {
-				"3xl": "1920px",
-			},
+			screens: { xsm: "425px", "3xl": "2100px" },
 		},
 	},
 	plugins: [

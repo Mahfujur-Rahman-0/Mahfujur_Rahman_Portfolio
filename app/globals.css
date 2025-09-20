@@ -293,11 +293,6 @@ html {
 	}
 }
 
-@media (min-width: 1931px) and (max-width: 2718px) {
-	.left-dynamic {
-		left: 46% !important;
-	}
-}
 .BannerCover {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -325,4 +320,10 @@ html {
 	padding: 0;
 	margin: 0;
 	box-shadow: 0px -15px 40px 35px #090b0d inset;
+}
+
+@media (min-width: 1931px) and (max-width: 2718px) {
+	.left-dynamic {
+		left: 46% !important;
+	}
 }

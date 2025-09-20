@@ -129,17 +129,14 @@ export default function Banner() {
 
 	return (
 		<section ref={Testtt} className={`relative bg-[#090B0D]`}>
-			<h1 className="left-[9%] top-[10%] absolute font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
+			<h1 className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[10%] absolute font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
 				Everything App for&nbsp;your teams
 			</h1>
 			<p className="absolute mt-5 max-w-md text-18 leading-snug tracking-tight text-grey-90 lg:mt-4 md:mt-3.5 md:text-16 sm:mt-3 sm:max-w-[248px] sm:text-15">
 				Huly, an open-source platform, serves as an all-in-one replacement of
 				Linear, Jira, Slack, and Notion.
 			</p>
-			<div
-				//	className="BannerCover overflow-hidden md:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic md:left-[45%] left-[50%] translate-x-[-50%]"
-				className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]"
-			>
+			<div className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]">
 				<Image
 					width={2048}
 					height={1138}

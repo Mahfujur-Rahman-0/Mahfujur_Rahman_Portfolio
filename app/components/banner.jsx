@@ -136,7 +136,10 @@ export default function Banner() {
 				Huly, an open-source platform, serves as an all-in-one replacement of
 				Linear, Jira, Slack, and Notion.
 			</p>
-			<div className="BannerCover overflow-hidden md:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic md:left-[45%] left-[50%] translate-x-[-50%]">
+			<div
+				//	className="BannerCover overflow-hidden md:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic md:left-[45%] left-[50%] translate-x-[-50%]"
+				className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]"
+			>
 				<Image
 					width={2048}
 					height={1138}
@@ -146,7 +149,7 @@ export default function Banner() {
 				/>
 			</div>
 			<video
-				className="md:w-full w-[160%] ml-[-21%] max-w-[160%] md:max-w-[1900px] md:mx-auto"
+				className="w-[160%] ml-[-21%] max-w-[160%] lg:max-w-[1900px] lg:mx-auto lg:w-full "
 				ref={videoRef}
 				muted
 				playsInline

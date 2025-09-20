@@ -202,7 +202,7 @@ export default function Header() {
 			<div
 				className={`${
 					!isChecked ? "right-full" : "right-0"
-				} absolute lg:hidden w-full px-6 transition-all duration-300 bg-neutral-950 h-96`}
+				} absolute lg:hidden w-full px-6 transition-all duration-300 bg-neutral-950`}
 			>
 				<ul
 					className={`lg:hidden block w-full text-decoration-none text-white font-medium text-sm`}

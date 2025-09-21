@@ -1,12 +1,15 @@
 "use client";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
+import SunBtn from "./Btn";
 
 export default function Banner() {
 	const videoRef = useRef(null);
 	const intervalRef = useRef(null);
-	const Testtt = useRef(null);
-	console.log(Testtt);
+	const isMoving = useRef(null);
+	const containerRef = useRef(null);
+	const positionRef = useRef({ x: 0, y: 0 });
+
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -14,8 +17,10 @@ export default function Banner() {
 					const video = entry.target;
 					if (entry.isIntersecting) {
 						video.play().catch((err) => console.error("Play error:", err));
+						animateStart();
 					} else {
 						video.pause();
+						stopAnimation();
 					}
 				});
 			},
@@ -33,9 +38,6 @@ export default function Banner() {
 		};
 	}, []);
 
-	const isMoving = useRef(null);
-	const containerRef = useRef(null);
-	const positionRef = useRef({ x: 0, y: 0 });
 	const handleMouseMove = useCallback((event) => {
 		if (!containerRef.current) return;
 
@@ -123,12 +125,8 @@ export default function Banner() {
 		}
 	};
 
-	useEffect(() => {
-		animateStart();
-	}, []);
-
 	return (
-		<section ref={Testtt} className={`relative bg-[#090B0D]`}>
+		<section className={`relative bg-[#090B0D]`}>
 			<div className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[1%] xsm:top-[6%] absolute ">
 				<h1 className="font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
 					Modern Web Experiences
@@ -140,7 +138,9 @@ export default function Banner() {
 						&nbsp;Clean, maintainable code for modern websites
 					</span>
 				</p>
+				<SunBtn />
 			</div>
+
 			<div className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]">
 				<Image
 					width={2048}

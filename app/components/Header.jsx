@@ -1,17 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
 	const [isChecked, setIsChecked] = useState(false);
+	const [scrollY, setScrollY] = useState(0);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setScrollY(window.scrollY); // vertical scroll position
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		// cleanup
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
+	console.log(scrollY);
 
 	const handleChange = () => {
 		setIsChecked(!isChecked);
 	};
 	return (
-		<header className="relative z-[33333333333333]">
+		<header
+			className={`z-[33333333333333] bg-[#090B0D] transition-all duration-500  w-full ${
+				scrollY >= 100 ? "fixed" : "relative"
+			}`}
+		>
 			<nav className="max-w-[1280px] h-16 px-6 mx-auto flex  text-white">
 				<Link href={"/"}>
 					<div className="flex w-[260px] py-3 items-center h-full">

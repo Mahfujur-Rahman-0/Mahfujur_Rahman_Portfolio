@@ -53,62 +53,6 @@ export default function Bell() {
 		}
 	}, [rotationAnglePendem]);
 	const [trry, setTry] = useState(false);
-	//bell animation end
-	// const TheBell = () => {
-	// 	if (isAnimating.current) return;
-	// 	isAnimating.current = true;
-	// 	setMouseCounter((prev) => {
-	// 		if (prev <= 41) {
-	// 			return prev + 1;
-	// 		} else {
-	// 			return 33;
-	// 		}
-	// 	});
-
-	// 	setTry(true);
-	// 	const interval = setInterval(() => {
-	// 		// Bell Body Animation start
-	// 		if (FinulStopN.current !== 3) {
-	// 			setRotationAngle((prev) => {
-	// 				if (prev <= 19 && NumChecker.current) {
-	// 					if (prev === 18) NumChecker.current = false;
-	// 					return prev + 2;
-	// 				} else if (prev >= -18 && !NumChecker.current) {
-	// 					if (prev === -18) NumChecker.current = true;
-	// 					return prev - 2;
-	// 				}
-	// 				return prev;
-	// 			});
-	// 		} else {
-	// 			setRotationAngle(0);
-	// 		}
-	// 		// Bell pendem Animation Start
-
-	// 		if (FinulStopPendem.current <= 6) {
-	// 			setRotationAnglePendem((prev) => {
-	// 				if (prev <= 18 && pendemChecker.current) {
-	// 					if (prev === 18) pendemChecker.current = false;
-	// 					return prev + 2;
-	// 				} else if (prev >= -18 && !pendemChecker.current) {
-	// 					if (prev === -18) pendemChecker.current = true;
-	// 					return prev - 2;
-	// 				}
-	// 			});
-	// 		} else {
-	// 			setRotationAnglePendem(0);
-	// 		}
-
-	// 		// Bell pendem Animation End
-	// 	}, 7);
-	// 	console.log("Testtt");
-	// 	setTimeout(() => {
-	// 		clearInterval(interval);
-	// 		isAnimating.current = false;
-	// 		FinulStopN.current = -1;
-	// 		FinulStopPendem.current = -1;
-	// 		setTry(false);
-	// 	}, 1500);
-	// };
 
 	const TheBell = useCallback(() => {
 		if (isAnimating.current) return;
@@ -180,7 +124,7 @@ export default function Bell() {
 		<>
 			<li
 				onMouseEnter={TheBell}
-				className="relative grid xl:h-[420px] bg-[#0C0C0C] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px]  order-4 w-full"
+				className="xxsm:min-h-[300px] relative grid xl:h-[420px] bg-[#0C0C0C] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px]  order-4 w-full"
 			>
 				<div className="absolute bottom-0 z-10 col-span-full flex w-full items-end px-6 pb-6 lg:px-5 lg:pb-5 md:px-4 md:pb-4 sm:px-5 sm:pb-5">
 					<p className="relative z-10 font-light leading-snug tracking-snugger text-white/65 md:leading-[1.2] sm:text-15">

@@ -11,7 +11,7 @@ export default function SunBtn() {
 		const x = e.clientX - rect.left; // mouse X relative to center
 		setTransform([x]);
 	};
-	console.log(transform[0]);
+	console.log(BTNRef.current.offsetWidth);
 
 	return (
 		<div className="mt-11 lg:mt-9 md:mt-7 sm:mt-5">
@@ -26,13 +26,13 @@ export default function SunBtn() {
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform"
 					style={{ opacity: 1 }}
 				>
-					<div class="border-button-light relative h-full w-full rounded-full"></div>
+					<div className="border-button-light relative h-full w-full rounded-full"></div>
 				</div>
 
 				{/* Second blur border */}
 				<div
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform rounded-full will-change-transform"
-					style={{ opacity: 0 }}
+					style={{ opacity: 1 }}
 				>
 					<div className="border-button-light relative h-full w-full rounded-full"></div>
 				</div>

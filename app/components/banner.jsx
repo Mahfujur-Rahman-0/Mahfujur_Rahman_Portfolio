@@ -8,7 +8,6 @@ export default function Banner() {
 	const intervalRef = useRef(null);
 	const isMoving = useRef(null);
 	const containerRef = useRef(null);
-	const positionRef = useRef({ x: 0, y: 0 });
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -40,12 +39,9 @@ export default function Banner() {
 
 	const handleMouseMove = useCallback((event) => {
 		if (!containerRef.current) return;
-
 		const rect = containerRef.current.getBoundingClientRect();
 		const x = event.clientX - rect.left;
 		const y = event.clientY - rect.top;
-
-		positionRef.current = { x, y };
 		containerRef.current.style.setProperty("--hero-mask-x", `${x - 150}px`);
 		containerRef.current.style.setProperty("--hero-mask-y", `${y}px`);
 		if (!isMoving.current) {

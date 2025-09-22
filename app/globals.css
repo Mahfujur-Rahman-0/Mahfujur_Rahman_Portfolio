@@ -305,81 +305,56 @@ html {
 	}
 }
 /*/////////////////////////////////////////////////////////////////////*/
-.border-button-light-blur:before {
+/* Base button */
+.border-button-light {
+	position: relative;
+	display: inline-block;
+	border-radius: 9999px;
+	border: 1px solid transparent;
+}
+
+/* Main blur & gradient effect */
+.border-button-light::before {
+	content: "";
+	position: absolute;
 	left: -0.125rem;
 	top: -0.125rem;
-	z-index: 10;
-	border-width: 2px;
-	--tw-blur: blur(2px);
-	--tw-brightness: 50;
-	--tw-contrast: 50;
+	z-index: 30;
+	box-sizing: content-box;
+	width: 100%;
+	height: 100%;
+	border-radius: 9999px;
+	border: 2px solid transparent;
+	--tw-blur: blur(7px);
+	filter: var(--tw-blur);
 	background: linear-gradient(transparent, transparent) padding-box,
 		linear-gradient(
-				97.68deg,
-				rgba(255, 177, 153, 0) 38.1%,
-				rgba(255, 177, 153, 0.2) 82.47%,
-				#ff7950 93.3%
+				91.96deg,
+				rgba(255, 177, 153, 0) 6.11%,
+				rgba(255, 177, 153, 0.2) 53.57%,
+				#ff7950 93.6%
 			)
 			border-box;
+	pointer-events: none;
+	-webkit-filter: var(--tw-blur);
 }
-.border-button-light-blur:after,
-.border-button-light-blur:before {
-	filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
-		var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
-		var(--tw-sepia) var(--tw-drop-shadow);
-}
-.border-button-light-blur:after,
-.border-button-light-blur:before {
-	content: var(--tw-content);
+
+/* Optional: if you want an extra blurred glow */
+.border-button-light-blur::after {
+	content: "";
 	position: absolute;
-}
-.border-button-light-blur:after,
-.border-button-light-blur:before {
-	box-sizing: content-box;
-	height: 100%;
+	left: -3px;
+	top: -3px;
+	z-index: 20;
 	width: 100%;
+	height: 100%;
 	border-radius: 9999px;
-	border-color: transparent;
-}
-.border-button-light {
-	border-radius: 9999px;
-	border-width: 1px;
-	border-color: transparent;
-}
-.border-button-light {
+	border: 3px solid transparent;
+	--tw-blur: blur(15px);
+	filter: var(--tw-blur);
 	background: linear-gradient(transparent, transparent) padding-box,
-		linear-gradient(
-				103.7deg,
-				hsla(15, 25%, 65%, 0.1) 38.66%,
-				rgba(233, 132, 99, 0.1) 68.55%,
-				#e98463 85.01%,
-				#fff 92.12%
-			)
+		linear-gradient(91.88deg, rgba(255, 137, 100, 0.2) 46.45%, #cd3100 98.59%)
 			border-box;
-}
-.border-button-light-blur:after,
-.border-button-light-blur:before {
-	filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
-		var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
-		var(--tw-sepia) var(--tw-drop-shadow);
-	content: var(--tw-content);
-	position: absolute;
-	box-sizing: content-box;
-	height: 100%;
-	width: 100%;
-	border-radius: 9999px;
-	border-color: transparent;
-}
-.border-button-light-blur:after,
-.border-button-light-blur:before {
-	filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
-		var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
-		var(--tw-sepia) var(--tw-drop-shadow);
-	content: var(--tw-content);
-	position: absolute;
-	box-sizing: content-box;
-	height: 100%;
-	width: 100%;
-	border-radius: 9999px;
-	border-color: transparent;
+	pointer-events: none;
+	-webkit-filter: var(--tw-blur);
 }

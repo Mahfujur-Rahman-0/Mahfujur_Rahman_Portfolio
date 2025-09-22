@@ -14,7 +14,7 @@ export default function SunBtn() {
 	console.log(BTNRef.current?.offsetWidth);
 
 	return (
-		<div className="mt-11 lg:mt-9 md:mt-7 sm:mt-5">
+		<div className="lg:mt-11 md:mt-9 mt-7 sm:inline-block hidden ">
 			<div
 				ref={BTNRef}
 				onMouseMove={handleMouseMove}

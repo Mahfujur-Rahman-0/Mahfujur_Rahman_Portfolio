@@ -11,7 +11,7 @@ export default function SunBtn() {
 		const x = e.clientX - rect.left; // mouse X relative to center
 		setTransform([x]);
 	};
-	console.log(BTNRef.current.offsetWidth);
+	console.log(BTNRef.current?.offsetWidth);
 
 	return (
 		<div className="mt-11 lg:mt-9 md:mt-7 sm:mt-5">

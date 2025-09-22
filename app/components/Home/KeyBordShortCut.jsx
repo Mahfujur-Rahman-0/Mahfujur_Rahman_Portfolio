@@ -1,16 +1,17 @@
 "use client";
-import { useRef, useState } from "react";
+import { useAppContext } from "@/app/context/AppContext";
+import { useState } from "react";
 
 export default function KeyBordShortCut() {
 	const [KEYbordEnter, setKEYbordEnter] = useState(1);
-
+	const { devToolsOpen } = useAppContext();
 	const MouseENTERED = (e) => {
 		// if (e == KEYbordEnter) return;
 		setKEYbordEnter(e);
 	};
 
 	return (
-		<>
+		devToolsOpen == true && (
 			<svg
 				className="translate-y-[-6%] md:translate-y-0"
 				xmlns="http://www.w3.org/2000/svg"
@@ -608,6 +609,6 @@ export default function KeyBordShortCut() {
 					</g>
 				</g>
 			</svg>
-		</>
+		)
 	);
 }

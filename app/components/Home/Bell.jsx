@@ -1,10 +1,11 @@
 "use client";
+import { useAppContext } from "@/app/context/AppContext";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 export default function Bell() {
 	const [MouseCounter, setMouseCounter] = useState(33);
 	const NotificationRef = useRef(null);
-
+	const { devToolsOpen } = useAppContext();
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -121,7 +122,7 @@ export default function Bell() {
 	]);
 
 	return (
-		<>
+		devToolsOpen == true && (
 			<li
 				onMouseEnter={TheBell}
 				className="xxsm:min-h-[300px] relative grid xl:h-[420px] bg-[#0C0C0C] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl bg-grey-2 bg-clip-padding ring-[6px] ring-white/40 lg:h-[300px] h-[260px]  order-4 w-full"
@@ -281,6 +282,6 @@ export default function Bell() {
 					</div>
 				</div>
 			</li>
-		</>
+		)
 	);
 }

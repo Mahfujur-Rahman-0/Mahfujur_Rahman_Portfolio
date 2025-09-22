@@ -40,7 +40,7 @@ export default function SunBtn() {
 				<div
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform"
 					style={{
-						opacity: ToRightOpacity == NaN ? 0 : ToRightOpacity,
+						opacity: Number.isNaN(ToRightOpacity) ? 1 : ToRightOpacity,
 					}}
 				>
 					<div className="border-button-light relative h-full w-full rounded-full"></div>
@@ -50,7 +50,7 @@ export default function SunBtn() {
 				<div
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform rounded-full will-change-transform"
 					style={{
-						opacity: !ToLeftOpacity ? 0 : ToLeftOpacity,
+						opacity: Number.isNaN(ToLeftOpacity) ? 0 : ToLeftOpacity,
 					}}
 				>
 					<div className="border-button-light relative h-full w-full rounded-full"></div>

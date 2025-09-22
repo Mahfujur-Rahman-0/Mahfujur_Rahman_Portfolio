@@ -123,7 +123,7 @@ export default function Banner() {
 
 	return (
 		<section className={`relative bg-[#090B0D]`}>
-			<div className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[1%] xsm:top-[6%] absolute ">
+			<div className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[1%] xsm:top-[6%] 2xl:top-[6%] xl:top-[0] absolute ">
 				<h1 className="font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] xl:text-[72px]  md:text-[56px] text-[32px]">
 					Modern Web Experiences
 				</h1>

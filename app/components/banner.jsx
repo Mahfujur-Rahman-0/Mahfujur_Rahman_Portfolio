@@ -124,10 +124,10 @@ export default function Banner() {
 	return (
 		<section className={`relative bg-[#090B0D]`}>
 			<div className="left-[9%] lg:left-[18%] 3xl:left-[24%] top-[1%] xsm:top-[6%] absolute ">
-				<h1 className="font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] lg:text-[72px]  md:text-[56px] text-[32px]">
+				<h1 className="font-semibold tracking-tight text-white lg:w-[572px] md:w-[435px] w-[300px] 2xl:text-[84px] xl:text-[72px]  md:text-[56px] text-[32px]">
 					Modern Web Experiences
 				</h1>
-				<p className="lg:mt-5 sm:max-w-md text-white md:mt-4 sm:mt-3.5 sm:text-[18px] mt-3 max-w-[248px] text-[16px] md:text-[22px]">
+				<p className="xl:mt-5 sm:max-w-md text-white md:mt-4 sm:mt-3.5 sm:text-[18px] mt-3 max-w-[248px] text-[16px] xl:text-[23px]">
 					From design to backend,
 					<br className="sm:hidden" /> I craft scalable web apps.
 					<span className="sm:inline hidden">
@@ -154,7 +154,11 @@ export default function Banner() {
 				loop
 				preload="auto"
 			>
-				<source src="/video/showreAnimation.mp4" type="video/mp4" />
+				<source
+					className="hidden"
+					src="/video/showreAnimation.mp4"
+					type="video/mp4"
+				/>
 			</video>
 			<div
 				className="absolute w-full top-0 h-full"

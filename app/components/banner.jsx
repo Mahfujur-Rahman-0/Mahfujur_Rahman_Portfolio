@@ -154,11 +154,7 @@ export default function Banner() {
 				loop
 				preload="auto"
 			>
-				<source
-					className="hidden"
-					src="/video/showreAnimation.mp4"
-					type="video/mp4"
-				/>
+				<source src="/video/showreAnimation.mp4" type="video/mp4" />
 			</video>
 			<div
 				className="absolute w-full top-0 h-full"

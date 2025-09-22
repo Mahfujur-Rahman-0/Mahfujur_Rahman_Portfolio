@@ -311,6 +311,14 @@ html {
 	display: inline-block;
 	border-radius: 9999px;
 	border: 1px solid transparent;
+	background: linear-gradient(transparent, transparent) padding-box,
+		linear-gradient(
+				91.96deg,
+				rgba(255, 177, 153, 0) 6.11%,
+				rgba(255, 177, 153, 0.2) 53.57%,
+				#ff7146d2 500%
+			)
+			border-box;
 }
 
 /* Main blur & gradient effect */

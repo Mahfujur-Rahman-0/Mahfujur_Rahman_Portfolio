@@ -19,8 +19,6 @@ export default function Header() {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	console.log(scrollY);
-
 	const handleChange = () => {
 		setIsChecked(!isChecked);
 	};

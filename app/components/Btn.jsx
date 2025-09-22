@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 
 export default function SunBtn() {
-	const [transform, setTransform] = useState([0]);
+	const [transform, setTransform] = useState([240]);
 	const BTNRef = useRef(null);
 
 	const handleMouseMove = (e) => {
@@ -11,7 +11,22 @@ export default function SunBtn() {
 		const x = e.clientX - rect.left; // mouse X relative to center
 		setTransform([x]);
 	};
-	console.log(BTNRef.current?.offsetWidth);
+
+	const ToRightOpacity = Math.max(
+		0,
+		Math.min(
+			1,
+			(transform[0] - BTNRef.current?.offsetWidth / 2) /
+				(BTNRef.current?.offsetWidth / 2)
+		)
+	);
+
+	const ToLeftOpacity = Math.min(
+		1,
+		((transform[0] - BTNRef.current?.offsetWidth / 2) /
+			(BTNRef.current?.offsetWidth / 2)) *
+			-1
+	);
 
 	return (
 		<div className="lg:mt-11 md:mt-9 mt-7 sm:inline-block hidden ">
@@ -24,7 +39,9 @@ export default function SunBtn() {
 
 				<div
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform"
-					style={{ opacity: 1 }}
+					style={{
+						opacity: ToRightOpacity == NaN ? 0 : ToRightOpacity,
+					}}
 				>
 					<div className="border-button-light relative h-full w-full rounded-full"></div>
 				</div>
@@ -32,7 +49,9 @@ export default function SunBtn() {
 				{/* Second blur border */}
 				<div
 					className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform rounded-full will-change-transform"
-					style={{ opacity: 1 }}
+					style={{
+						opacity: !ToLeftOpacity ? 0 : ToLeftOpacity,
+					}}
 				>
 					<div className="border-button-light relative h-full w-full rounded-full"></div>
 				</div>

@@ -1,16 +1,31 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
-export default function SunBtn() {
-	const [transform, setTransform] = useState([240]);
+export default function SunBtn({ stopArea }) {
+	const [transform, setTransform] = useState([stopArea]);
+	const [ClassAdd, setClassAdd] = useState();
 	const BTNRef = useRef(null);
 	const { devToolsOpen } = useAppContext();
+	const timerRef = useRef(null); // store timeout reference
+
+	console.log(BTNRef.current?.offsetWidth);
+
 	const handleMouseMove = (e) => {
 		const rect = BTNRef.current.getBoundingClientRect();
-		const x = e.clientX - rect.left; // mouse X relative to center
+		const x = e.clientX - rect.left;
 		setTransform([x]);
+		// Clear any existing timer because mouse is moving
+		if (timerRef.current) {
+			clearTimeout(timerRef.current);
+			setClassAdd("");
+		}
+		// Start a new timer: if mouse stops for 3s, update ClassADD
+		timerRef.current = setTimeout(() => {
+			setTransform([stopArea]);
+			setClassAdd("animatedBtn");
+		}, 3000);
 	};
 
 	const ToRightOpacity = Math.max(
@@ -40,7 +55,7 @@ export default function SunBtn() {
 					{/* First blur border */}
 
 					<div
-						className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform"
+						className={`${ClassAdd} border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform`}
 						style={{
 							opacity: Number.isNaN(ToRightOpacity) ? 1 : ToRightOpacity,
 						}}
@@ -50,7 +65,7 @@ export default function SunBtn() {
 
 					{/* Second blur border */}
 					<div
-						className="border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform rounded-full will-change-transform"
+						className={`${ClassAdd} border-button-light-blur absolute left-1/2 top-1/2 h-[calc(100%+9px)] w-[calc(100%+9px)] -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform rounded-full will-change-transform`}
 						style={{
 							opacity: Number.isNaN(ToLeftOpacity) ? 0 : ToLeftOpacity,
 						}}
@@ -62,7 +77,7 @@ export default function SunBtn() {
 					<a className="transition-colors duration-200 uppercase font-bold flex items-center justify-center h-10 px-16 text-12 text-black -tracking-[0.015em] relative z-10 overflow-hidden rounded-full border border-white/60 bg-[#d1d1d1] space-x-1 sm:pl-[59px] sm:pr-[52px]">
 						{/* Glow effect */}
 						<div
-							className="absolute -z-10 flex w-[204px] items-center justify-center"
+							className={`${ClassAdd} absolute -z-10 flex w-[204px] items-center justify-center`}
 							style={{
 								transform: `translateX(${transform[0] - 130}px) `,
 							}}

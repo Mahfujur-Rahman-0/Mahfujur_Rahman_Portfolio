@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SunBtn from "./Btn";
 
 export default function Banner() {
 	const videoRef = useRef(null);
 	const intervalRef = useRef(null);
-	const isMoving = useRef(null);
 	const containerRef = useRef(null);
+	const timerRef = useRef(null);
+	const isMoving = useRef(false);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -42,27 +43,25 @@ export default function Banner() {
 		const rect = containerRef.current.getBoundingClientRect();
 		const x = event.clientX - rect.left;
 		const y = event.clientY - rect.top;
+		// Update CSS vars
 		containerRef.current.style.setProperty("--hero-mask-x", `${x - 150}px`);
 		containerRef.current.style.setProperty("--hero-mask-y", `${y}px`);
+		// Mark as moving
 		if (!isMoving.current) {
-			isMoving.current = { x, y };
-			counter();
+			isMoving.current = true;
 		}
-		stopAnimation();
+		// Stop any previous animation timer
+		if (timerRef.current) {
+			clearTimeout(timerRef.current);
+		}
+		// Start a new timer: if no movement for 3s, animate
+		timerRef.current = setTimeout(() => {
+			isMoving.current = false;
+			animateStart();
+		}, 3000);
+		stopAnimation(); // if you want to pause ongoing animation during movement
 	}, []);
 
-	//Processing leter
-	const counter = () => {
-		let remainingTime = 1; // Starting time
-		const timer = setInterval(() => {
-			remainingTime--;
-			if (remainingTime === 0) {
-				isMoving.current = null;
-				animateStart();
-				clearInterval(timer); // Stop the timer when it reaches 0
-			}
-		}, 3000);
-	};
 	const animateStart = () => {
 		let tempX = 0;
 		let tempY = 30;
@@ -134,7 +133,7 @@ export default function Banner() {
 						&nbsp;Clean, maintainable code for modern websites
 					</span>
 				</p>
-				<SunBtn />
+				<SunBtn stopArea={240} />
 			</div>
 
 			<div className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]">

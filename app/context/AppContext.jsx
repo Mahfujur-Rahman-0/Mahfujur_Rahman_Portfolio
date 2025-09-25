@@ -8,7 +8,7 @@ export function AppProvider({ children }) {
 	const [devToolsOpen, setDevToolsOpen] = useState(false);
 
 	useEffect(() => {
-		const threshold = 60;
+		const threshold = 5;
 
 		function checkDevTools() {
 			const widthDiff = window.outerWidth - window.innerWidth;

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 export default function Bell() {
 	const [MouseCounter, setMouseCounter] = useState(33);
 	const NotificationRef = useRef(null);
-	const { devToolsOpen } = useAppContext();
+
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function KeyBordShortCut() {
 	const [KEYbordEnter, setKEYbordEnter] = useState(1);
-	const { devToolsOpen } = useAppContext();
+
 	const MouseENTERED = (e) => {
 		// if (e == KEYbordEnter) return;
 		setKEYbordEnter(e);

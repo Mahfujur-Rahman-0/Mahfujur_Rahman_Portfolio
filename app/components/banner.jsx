@@ -133,7 +133,7 @@ export default function Banner() {
 						&nbsp;Clean, maintainable code for modern websites
 					</span>
 				</p>
-				<SunBtn stopArea={240} />
+				<SunBtn stopArea={240} URLlink="g/g" />
 			</div>
 
 			<div className="BannerCover overflow-hidden lg:w-[53vw] w-[85vw] absolute bottom-[2%] max-w-[983px] left-dynamic lg:left-[45%] left-[50%] translate-x-[-50%]">
